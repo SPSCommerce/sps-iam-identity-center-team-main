@@ -21,16 +21,16 @@ export AWS_PROFILE=$TEAM_ACCOUNT_PROFILE
 
 cd ..
 
-aws codecommit create-repository --region $REGION --repository-name team-idc-app --repository-description "Temporary Elevated Access Management (TEAM) Application"
+aws codecommit create-repository --region $REGION --repository-name privileged-access --repository-description "Temporary Elevated Access Management (TEAM) Application"
 git remote remove origin
-git remote add origin codecommit::$REGION://team-idc-app
+git remote add origin codecommit::$REGION://privileged-access
 git push origin main
 
 cd ./deployment
 if [[ ! -z "$TAGS" ]];
 then
   aws cloudformation deploy --region $REGION --template-file template.yml \
-  --stack-name TEAM-IDC-APP \
+  --stack-name PRIVILEGED-ACCESS \
   --parameter-overrides \
     Source=$EMAIL_SOURCE \
     Login=$IDC_LOGIN_URL \
@@ -42,7 +42,7 @@ then
   --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM
 else
   aws cloudformation deploy --region $REGION --template-file template.yml \
-  --stack-name TEAM-IDC-APP \
+  --stack-name PRIVILEGED-ACCESS \
   --parameter-overrides \
     Source=$EMAIL_SOURCE \
     Login=$IDC_LOGIN_URL \

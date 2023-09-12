@@ -63,8 +63,8 @@ Resources:
   AmplifyApp:
     Type: "AWS::Amplify::App"
     Properties:
-      Name: TEAM-IDC-APP
-      Repository: !Sub https://git-codecommit.${AWS::Region}.amazonaws.com/v1/repos/team-idc-app
+      Name: PRIVILEGED-ACCESS
+      Repository: https://github.com/SPSCommerce/sps-iam-identity-center-team-main
       Description: Temporary Elevated Access Management Application
       CustomRules:
         - Source: /<*>

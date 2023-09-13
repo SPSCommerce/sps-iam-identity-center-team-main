@@ -67,7 +67,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Repo update pre build and deploy
-        if: ${{ contains(github.even.head_commit.message, 'update') }}
+        if: contains(github.even.head_commit.message, 'update')
         run: |
           git remote remove origin
           git remote add origin codecommit::$REGION://privileged-access
@@ -124,7 +124,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Remove upstream
-        if: ${{ contains(github.even.head_commit.message, 'update') }}
+        if: contains(github.even.head_commit.message, 'update')
         run: |
           git push origin main
           git remote remove team

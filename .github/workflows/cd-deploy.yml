@@ -43,6 +43,7 @@ jobs:
 
       - name: Setup Codecommit repo
         run: |
+          pip install git-remote-codecommit
           aws codecommit create-repository --region $REGION --repository-name privileged-access --repository-description "Temporary Elevated Access Management (TEAM) Application"
           git remote remove origin
           git remote add origin codecommit::$REGION://privileged-access

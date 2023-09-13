@@ -46,6 +46,7 @@ jobs:
           aws cloudformation deploy --region ${{ env.REGION }} --template-file ./deployment/template.yml \
           --stack-name PRIVILEGED-ACCESS \
           --parameter-overrides \
+            access_token=${{ secrets.ACCESS_TOKEN }} \
             Source=${{ env.EMAIL_SOURCE }} \
             Login=${{ secrets.IDC_LOGIN_URL }} \
             CloudTrailAuditLogs=${{ env.CLOUDTRAIL_AUDIT_LOGS }} \

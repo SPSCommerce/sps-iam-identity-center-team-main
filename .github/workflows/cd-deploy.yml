@@ -23,7 +23,7 @@ env:
   CLOUDTRAIL_AUDIT_LOGS: read_write
 
 jobs:
-  build-and-deploy:
+  repo-setup:
     environment: prod
     runs-on: ubuntu-22.04
     permissions:
@@ -41,12 +41,62 @@ jobs:
           role-to-assume: arn:aws:iam::504831389664:role/COGithubActionsDeployRole
           aws-region: us-east-1
 
+      - name: Setup Codecommit repo
+        run: |
+          aws codecommit create-repository --region $REGION --repository-name privileged-access --repository-description "Temporary Elevated Access Management (TEAM) Application"
+          git remote remove origin
+          git remote add origin codecommit::$REGION://privileged-access
+          git push origin main
+
+  repo-update-pre-build:
+    environment: prod
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::504831389664:role/COGithubActionsDeployRole
+          aws-region: us-east-1
+
+      - name: Repo update pre build and deploy
+        if: ${{ contains(github.even.head_commit.message, "update") }}
+        run: |
+          git remote remove origin
+          git remote add origin codecommit::$REGION://privileged-access
+          git remote add upstream https://github.com/SPSCommerce/sps-iam-identity-center-team-main.git
+          git pull upstream main
+
+  build-and-deploy:
+    environment: prod
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::504831389664:role/COGithubActionsDeployRole
+          aws-region: us-east-1  
+
       - name: deploy TEAM app
         run: |
           aws cloudformation deploy --region ${{ env.REGION }} --template-file ./deployment/template.yml \
           --stack-name PRIVILEGED-ACCESS \
           --parameter-overrides \
-            AccessToken=${{ secrets.ACCESS_TOKEN }} \
             Source=${{ env.EMAIL_SOURCE }} \
             Login=${{ secrets.IDC_LOGIN_URL }} \
             CloudTrailAuditLogs=${{ env.CLOUDTRAIL_AUDIT_LOGS }} \
@@ -55,4 +105,27 @@ jobs:
           --tags ${{ env.TAGS }} \
           --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM
 
+  repo-update-post-build:
+    environment: prod
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::504831389664:role/COGithubActionsDeployRole
+          aws-region: us-east-1
+
+      - name: Remove upstream
+        if: ${{ contains(github.even.head_commit.message, "update") }}
+        run: |
+          git push origin main
+          git remote remove team
 

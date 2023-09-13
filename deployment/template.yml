@@ -67,8 +67,7 @@ Resources:
     Type: "AWS::Amplify::App"
     Properties:
       Name: PRIVILEGED-ACCESS
-      Repository: https://github.com/SPSCommerce/sps-iam-identity-center-team-main
-      AccessToken: !Ref AccessToken
+      Repository: !Sub https://git-codecommit.${AWS::Region}.amazonaws.com/v1/repos/privileged-access
       Description: Temporary Elevated Access Management Application
       CustomRules:
         - Source: /<*>

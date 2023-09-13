@@ -1,9 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Temporary Elevated Access Management (TEAM) Application stack
 Parameters:
-  AccessToken:
-    Type: String
-    Description: Access token for github repo
   Source:
     Type: String
     Description: Email notification source

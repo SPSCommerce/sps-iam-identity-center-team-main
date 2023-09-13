@@ -6,11 +6,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "src/**"
-      - "!docs/**"
-      - "!deployment/**"
-      - "package.json"
 
   workflow_dispatch:
 

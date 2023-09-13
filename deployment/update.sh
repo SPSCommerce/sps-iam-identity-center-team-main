@@ -21,7 +21,7 @@ export AWS_PROFILE=$TEAM_ACCOUNT_PROFILE
 
 git remote remove origin
 git remote add origin codecommit::$REGION://privileged-access
-git remote add team https://github.com/aws-samples/iam-identity-center-team.git
+git remote add team https://github.com/SPSCommerce/sps-iam-identity-center-team-main.git
 git pull team main
 
 if [[ ! -z "$TAGS" ]];

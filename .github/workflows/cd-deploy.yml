@@ -44,6 +44,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Setup Codecommit repo
+        if: contains(github.even.head_commit.message, 'create')
         run: |
           pip install git-remote-codecommit
           aws codecommit create-repository --region $REGION --repository-name privileged-access --repository-description "Temporary Elevated Access Management (TEAM) Application"
@@ -52,6 +53,7 @@ jobs:
           git push origin main
 
   repo-update-pre-build:
+    needs: repo-setup
     environment: prod
     runs-on: ubuntu-22.04
     permissions:
@@ -80,6 +82,7 @@ jobs:
           git pull upstream main
 
   build-and-deploy:
+    needs: repo-update-pre-build
     environment: prod
     runs-on: ubuntu-22.04
     permissions:
@@ -113,6 +116,7 @@ jobs:
           --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM
 
   repo-update-post-build:
+    needs: build-and-deploy
     environment: prod
     runs-on: ubuntu-22.04
     permissions:

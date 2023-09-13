@@ -43,7 +43,7 @@ jobs:
 
       - name: deploy TEAM app
         run: |
-          aws cloudformation deploy --region ${{ env.REGION }} --template-file ./deploymenyt/template.yml \
+          aws cloudformation deploy --region ${{ env.REGION }} --template-file ./deployment/template.yml \
           --stack-name PRIVILEGED-ACCESS \
           --parameter-overrides \
             Source=${{ env.EMAIL_SOURCE }} \

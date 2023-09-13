@@ -20,14 +20,14 @@ set -xe
 export AWS_PROFILE=$TEAM_ACCOUNT_PROFILE
 
 git remote remove origin
-git remote add origin codecommit::$REGION://team-idc-app
+git remote add origin codecommit::$REGION://privileged-access
 git remote add team https://github.com/aws-samples/iam-identity-center-team.git
 git pull team main
 
 if [[ ! -z "$TAGS" ]];
 then
   aws cloudformation deploy --region $REGION --template-file template.yml \
-  --stack-name TEAM-IDC-APP \
+  --stack-name PRIVILEGED-ACCESS \
   --parameter-overrides \
     Source=$EMAIL_SOURCE \
     Login=$IDC_LOGIN_URL \
@@ -39,7 +39,7 @@ then
   --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM
 else
   aws cloudformation deploy --region $REGION --template-file template.yml \
-  --stack-name TEAM-IDC-APP \
+  --stack-name PRIVILEGED-ACCESS \
   --parameter-overrides \
     Source=$EMAIL_SOURCE \
     Login=$IDC_LOGIN_URL \

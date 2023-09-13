@@ -1,4 +1,4 @@
-name: Build and Deploy TEAM App
+name: Build and Deploy TEAM(privileged-access) App
 
 # Controls when the workflow will run
 on:

@@ -76,6 +76,8 @@ Resources:
       EnvironmentVariables: 
         - Name: AMPLIFY_DESTRUCTIVE_UPDATES
           Value: true
+        - Name: TAGS
+          Value: !Ref tags
 
 
       BuildSpec: |-
@@ -109,9 +111,6 @@ Resources:
           cache:
             paths:
               - node_modules/**/*
-      Tags:
-        - Key: Name
-          Value: TEAM
       IAMServiceRole: !GetAtt AmplifyRole.Arn
 
   AmplifyBranch:
@@ -134,8 +133,6 @@ Resources:
           Value: !Ref teamAdminGroup
         - Name: TEAM_AUDITOR_GROUP
           Value: !Ref teamAuditGroup
-        - Name: TAGS
-          Value: !Ref tags
       Tags:
         - Key: Branch
           Value: main

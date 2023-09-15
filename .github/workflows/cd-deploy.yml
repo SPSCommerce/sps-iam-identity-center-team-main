@@ -11,10 +11,10 @@ on:
 
 env:
   SERVICE_ID: 3e17f16e-ff3a-4005-aa9a-23c2f2ed5485
-  EMAIL_SOURCE: cloudops@spscommerce.com
+  EMAIL_SOURCE: aws_privilege_approvers@spscommerce.com
   REGION: us-east-1
   TEAM_ACCOUNT: 504831389664
-  TAGS: sps:service_id=3e17f16e-ff3a-4005-aa9a-23c2f2ed5485 sps:owner=cloudops@spscommerce.com sps:email_manager=tsjordan@spscommerce.com sps:boundary_id=504831389664 sps:cost_owner=adomeier@spscommerce.com sps:boundary_name=spsawsidentitycenter
+  TAGS: sps:service_id=3e17f16e-ff3a-4005-aa9a-23c2f2ed5485
   CLOUDTRAIL_AUDIT_LOGS: read_write
 
 jobs:

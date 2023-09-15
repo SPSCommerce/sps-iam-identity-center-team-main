@@ -78,6 +78,7 @@ jobs:
             CloudTrailAuditLogs=${{ env.CLOUDTRAIL_AUDIT_LOGS }} \
             teamAdminGroup=${{ secrets.TEAM_ADMIN_GROUP }} \
             teamAuditGroup=${{ secrets.TEAM_AUDITOR_GROUP}} \
+            tags=${{ env.TAGS }} \
           --tags ${{ env.TAGS }} \
           --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM
 

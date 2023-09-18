@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Temporary Elevated Access Management (TEAM) Application Repo
+
+Resources:
+  PrivilegedAccess:
+    Type: AWS::CodeCommit::Repository
+    Properties: 
+      RepositoryDescription: Temporary Elevated Access Management (TEAM) Application
+      RepositoryName: privileged-access
+      Tags: 
+        - sps:service_id=3e17f16e-ff3a-4005-aa9a-23c2f2ed5485

@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: Temporary Elevated Access Management (TEAM) Application Repo
 
 Resources:
-  PrivilegedAccess:
+  PrivilegedAccessRepo:
     Type: AWS::CodeCommit::Repository
     Properties: 
       RepositoryDescription: Temporary Elevated Access Management (TEAM) Application

@@ -18,35 +18,7 @@ env:
   CLOUDTRAIL_AUDIT_LOGS: read_write
 
 jobs:
-  repo-setup:
-    environment: prod
-    runs-on: ubuntu-22.04
-    permissions:
-      id-token: write
-      contents: write
-
-    steps:
-        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          role-to-assume: arn:aws:iam::504831389664:role/COGithubActionsDeployRole
-          aws-region: us-east-1
-
-      - name: Setup code-commit repo
-        run: |
-          aws cloudformation deploy --region ${{ env.REGION }} --template-file ./deployment/code-commit-cf.yml \
-          --stack-name PRIVILEGED-ACCESS-REPO \
-          --tags ${{ env.TAGS }} \
-          --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM
-
   build-and-deploy:
-    needs: repo-setup
     environment: prod
     runs-on: ubuntu-22.04
     permissions:

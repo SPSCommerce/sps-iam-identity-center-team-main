@@ -15,7 +15,7 @@ env:
   REGION: us-east-1
   TEAM_ACCOUNT: 504831389664
   TAGS: sps:service_id=3e17f16e-ff3a-4005-aa9a-23c2f2ed5485
-  CLOUDTRAIL_AUDIT_LOGS: read_write
+  CLOUDTRAIL_AUDIT_LOGS: none
 
 jobs:
   build-and-deploy:

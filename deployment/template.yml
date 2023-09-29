@@ -127,7 +127,7 @@ Resources:
         - Name: CLOUDTRAIL_AUDIT_LOGS
           Value: !If
             - IsEmptyCloudTrailAuditLogs
-            - "read_write"
+            - "none"
             - !Ref CloudTrailAuditLogs
         - Name: TEAM_ADMIN_GROUP
           Value: !Ref teamAdminGroup
